@@ -1,0 +1,12 @@
+.boxContainer{
+    background-color: #f8abff;
+    border-radius: 1em;
+    padding: 2em;
+}
+
+.boxItem{
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-left: 5em;
+    margin-right: 5em;
+}
