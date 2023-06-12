@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Maxter shop</title>
+    <title>Academy Hour</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <link rel='stylesheet' type='text/css' media='screen' href='./style/main.css'>
@@ -25,27 +25,27 @@
         <div class="row">
             <legend>Los cursos más vistos</legend>
             <div class="col-6 card mb-3" style="max-width: 540px;">
-            <a href="./indexCurso.php?curso=1" class="nav-link text-muted">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="./resources/logo.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="card-text"><small class="text-body-secondary">123.00 $</small></p>
-                                </div>
-                                <div class="col">
-                                    <p class="card-text"><small class="text-body-secondary">5 niveles</small></p>
+                <a href="./indexCurso.php?curso=1" class="nav-link text-muted">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="./resources/logo.jpg" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="card-text"><small class="text-body-secondary">123.00 $</small></p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="card-text"><small class="text-body-secondary">5 niveles</small></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
             </div>
 
             <div class="col-6 card mb-3" style="max-width: 540px;">
