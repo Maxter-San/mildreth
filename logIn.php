@@ -18,6 +18,11 @@
 
 <body class="d-flex flex-column min-vh-100 bg-secondary.bg-gradient" style="margin-top: 3.5em;">
     <?php
+    if (session_status() != 2)
+        session_start();
+
+    include_once('apis/sesion.php');
+
     include_once('assets/header.php');
     ?>
 
@@ -28,26 +33,31 @@
             </div>
             <form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
 
+                <?php if (isset($_GET['usuarioCreado'])) {
+                    echo ('<p class="text-success">Usuario creado, favor de iniciar sesión</p>');
+                } ?>
+
                 <div class="mb-3">
                     <label for="formUsuario" class="form-label">Usuario</label>
                     <input class="form-control" id="formUsuario" placeholder="Escribe tú usuario..." name="usuario" value="<?php if (isset($_GET['paramUsuario'])) {
-                                                                                                                                    echo ($_GET['paramUsuario']);
-                                                                                                                                } ?>">
+                                                                                                                                echo ($_GET['paramUsuario']);
+                                                                                                                            } ?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="formPassword" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="formPassword" placeholder="Escribe tú contraseña..." name="password" value="<?php if (isset($_GET['paramPassword'])) {
-                                                                                                                                                            echo ($_GET['paramPassword']);
-                                                                                                                                                        } ?>">
+                                                                                                                                                    echo ($_GET['paramPassword']);
+                                                                                                                                                } ?>">
                 </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" value="ok" id="checkRecordar">
-                    <label class="form-check-label" for="checkRecordar">
-                        Recordar usuario
-                    </label>
-                </div>
+                <?php if (isset($_GET['error'])) {
+                    echo ('<p class="text-danger">Usuario o contraseña incorrectos</p>');
+                } ?>
+
+                <?php if (isset($_GET['bloqueado'])) {
+                    echo ('<p class="text-danger">Usuario bloqueado</p>');
+                } ?>
 
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-outline-secondary" onclick="validarLogIn();" name="submitLogIn">Iniciar sesión</button>

@@ -1,3 +1,20 @@
+<?php
+if (session_status() != 2)
+    session_start();
+
+if (isset($_POST['logOutButton'])) {
+    session_destroy();
+    header("Location: ./");
+}
+
+include_once('./apis/sesion.php');
+$var = new sesionApi();
+$usuario = null;
+if(isset($_SESSION["s_userType"])){
+    $usuario = $var->loadUser();
+}
+?>
+
 <nav class="navbar navbar-expand-lg navbar fixed-top" style="background-color: #f8abff;">
     <div class="container-fluid container">
         <a class="navbar-brand" href="./">
@@ -22,33 +39,86 @@
             </form>
         </div>
 
-        <?php 
-            if(isset($_SESSION["id_usuario"])){
+        <?php
+        if (isset($_SESSION["s_userType"])) {
+            if ($_SESSION["s_userType"] == "Admin") {
         ?>
-            <button type="button" class="btn btn-outline-secondary">Mis cursos</button>
-            <div class="dropdown text-end">
-                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                </a>
-                <ul class="dropdown-menu text-small">
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Configuración</a></li>
-                    <li><a class="dropdown-item" href="#">Certificados</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Salir</a></li>
-                </ul>
-            </div>
-        <?php 
-            }else{
-        ?>
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?php if (isset($usuario)) {
+                                        echo 'data:image;base64,' . base64_encode($usuario['foto']);
+                                    } else {
+                                        echo 'https://github.com/mdo.png';
+                                    } ?>" alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="#">Configuración</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+                            <li><input class="dropdown-item" type="submit" name="logOutButton" value="Cerrar sesión"></input></li>
+                        </form>
+                    </ul>
+                </div>
+
+            <?php
+            } else if ($_SESSION["s_userType"] == "Instructor") {
+            ?>
+                <a href="./crearCurso.php"><button type="button" class="btn btn-outline-secondary">Crear curso</button></a>
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?php if (isset($usuario)) {
+                                        echo 'data:image;base64,' . base64_encode($usuario['foto']);
+                                    } else {
+                                        echo 'https://github.com/mdo.png';
+                                    } ?>" alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="#">Configuración</a></li>
+                        <li><a class="dropdown-item" href="./misVentas.php">Mis ventas</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+                            <li><input class="dropdown-item" type="submit" name="logOutButton" value="Cerrar sesión"></input></li>
+                        </form>
+                    </ul>
+                </div>
+
+            <?php
+            } else if ($_SESSION["s_userType"] == "Estudiante") {
+            ?>
+                <a href="./misCursos.php"><button type="button" class="btn btn-outline-secondary">Mis cursos</button></a>
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?php if (isset($usuario)) {
+                                        echo 'data:image;base64,' . base64_encode($usuario['foto']);
+                                    } else {
+                                        echo 'https://github.com/mdo.png';
+                                    } ?>" alt="mdo" width="32" height="32" class="rounded-circle">
+
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="#">Configuración</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+                            <li><input class="dropdown-item" type="submit" name="logOutButton" value="Cerrar sesión"></input></li>
+                        </form>
+                    </ul>
+                </div>
+            <?php
+            }
+        } else {
+            ?>
             <div class="dropdown text-end">
                 <a href="./logIn.php"><button type="button" class="btn btn-outline-secondary">Iniciar sesión</button></a>
                 <a href="./signUp.php"><button type="button" class="btn btn-secondary">Registrarme</button></a>
             </div>
-        <?php 
-            }
+        <?php
+        }
         ?>
     </div>
 </nav>

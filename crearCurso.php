@@ -18,6 +18,8 @@
 
 <body class="d-flex flex-column min-vh-100 bg-secondary.bg-gradient" style="margin-top: 3.5em;">
     <?php
+    include_once('apis/cursos.php');
+
     include_once('assets/header.php');
     ?>
 

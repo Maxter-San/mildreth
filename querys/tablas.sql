@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     boolActivo boolean		default true
 							comment '',
                             
-	intentosFallidos int 	unsigned
+	intentosFallidos int 	unsigned default 0
 							comment '',
                             
     PRIMARY KEY(id_usuario)

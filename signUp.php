@@ -18,6 +18,9 @@
 
 <body class="d-flex flex-column min-vh-100 bg-secondary.bg-gradient" style="margin-top: 3.5em;">
     <?php
+
+    include_once('apis/sesion.php');
+
     include_once('assets/header.php');
     ?>
 
@@ -28,50 +31,32 @@
         <form method="POST" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'] ?>">
             <div class="col-md form-group boxItem">
                 <label class="form-label">Nombre(s)</label>
-                <input class="form-control" id="formNombre" minlength="3" maxlength="50" placeholder="Escribe tu nombre(s)..." required name="nombre" value="<?php if (isset($_GET['paramNombre'])) {
-                                                                                                                                                    echo ($_GET['paramNombre']);
-                                                                                                                                                } ?>">
+                <input class="form-control" id="formNombre" minlength="3" maxlength="50" placeholder="Escribe tu nombre(s)..." required name="nombre">
             </div>
 
             <div class="col-md form-group boxItem">
                 <label class="form-label">Apellido(s)</label>
-                <input class="form-control" id="formApellido" minlength="3" maxlength="50" placeholder="Escribe tu apellido(s)..." required name="apellido" value="<?php if (isset($_GET['paramApellido'])) {
-                                                                                                                                                            echo ($_GET['paramApellido']);
-                                                                                                                                                        } ?>">
+                <input class="form-control" id="formApellido" minlength="3" maxlength="50" placeholder="Escribe tu apellido(s)..." required name="apellido">
             </div>
 
             <div class="col-md form-group boxItem">
                 <label class="form-label">Género</label>
                 <select class="form-select" id="formGenero" required name="genero">
                     <option value="">Selecciona tu sexo</option>
-                    <option value="Hombre" <?php if (isset($_GET['paramGenero'])) {
-                                                if ($_GET['paramGenero'] == "Hombre") {
-                                                    echo ("selected");
-                                                }
-                                            } ?>>Hombre
+                    <option value="Hombre">Hombre
                     </option>
 
-                    <option value="Mujer" <?php if (isset($_GET['paramGenero'])) {
-                                                if ($_GET['paramGenero'] == "Mujer") {
-                                                    echo ("selected");
-                                                }
-                                            } ?>>Mujer
+                    <option value="Mujer">Mujer
                     </option>
 
-                    <option value="Otro" <?php if (isset($_GET['paramGenero'])) {
-                                                if ($_GET['paramGenero'] == "Otro") {
-                                                    echo ("selected");
-                                                }
-                                            } ?>>Otro
+                    <option value="Otro">Otro
                     </option>
                 </select>
             </div>
 
             <div class="col-md form-group boxItem">
                 <label class="form-label">Fecha de nacimiento</label>
-                <input class="form-control" type="date" id="formFechaNacimiento" required name="fechaNacimiento" value="<?php if (isset($_GET['paramFechaNacimiento'])) {
-                                                                                                                            echo ($_GET['paramFechaNacimiento']);
-                                                                                                                        } ?>">
+                <input class="form-control" type="date" id="formFechaNacimiento" required name="fechaNacimiento">
             </div>
 
             <div class="col-md form-group boxItem">
@@ -81,16 +66,27 @@
 
             <div class="col-md form-group boxItem">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" id="formEmail" maxlength="50" placeholder="Escribe tu email..." required name="email" value="<?php if (isset($_GET['paramEmail'])) {
-                                                                                                                                                    echo ($_GET['paramEmail']);
-                                                                                                                                                } ?>">
+                <input type="email" class="form-control" id="formEmail" maxlength="50" placeholder="Escribe tu email..." required name="email">
             </div>
 
             <div class="col-md form-group boxItem">
                 <label class="form-label">Contraseña</label>
-                <input class="form-control" type="password" id="formPassword" minlength="8" maxlength="50" placeholder="Escribe tu contraseña..." required name="password" value="<?php if (isset($_GET['paramPassword'])) {
-                                                                                                                                                    echo ($_GET['paramPassword']);
-                                                                                                                                                } ?>">
+                <input class="form-control" type="password" id="formPassword" minlength="8" maxlength="50" placeholder="Escribe tu contraseña..." required name="password">
+            </div>
+
+            <div class="col-md form-group boxItem">
+                <label class="form-label">Rol</label>
+                <select class="form-select" id="formGenero" required name="rol">
+                    <option value="">Selecciona tu rol</option>
+                    <option value="Estudiante">Estudiante
+                    </option>
+
+                    <option value="Instructor">Instructor
+                    </option>
+
+                    <option value="Admin">Admin
+                    </option>
+                </select>
             </div>
 
             <br>
