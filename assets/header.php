@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-list-ul"></i>Categorías</a>
+                    <a class="nav-link" href="./categorias.php"><i class="bi bi-list-ul"></i>Categorías</a>
                 </li>
             </ul>
 
