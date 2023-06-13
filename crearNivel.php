@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Academy Hour</title>
+    <title>Crear nivel</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <link rel='stylesheet' type='text/css' media='screen' href='./styles/box.css'>
@@ -53,6 +53,11 @@
                 <div class="col-md form-group boxItem">
                     <label class="form-label">Videos</label>
                     <input class="form-control" type="file" accept="video/mp4" id="formVideo" name="videos[]" required multiple>
+                </div>
+
+                <div class="col-md form-group boxItem">
+                    <label class="form-label">Precio del nivel</label>
+                    <input class="form-control" type="number" id="formPrecio" min="1" placeholder="Precio del nivel..." name="precio">
                 </div>
 
                 <div class="col-md form-group boxItem">

@@ -23,7 +23,7 @@
     <div class="container mt-5 mb-5">
 
         <div class="row">
-            <legend>Los cursos más vistos</legend>
+            <legend>Los cursos mejor calificados</legend>
             <div class="col-6 card mb-3" style="max-width: 540px;">
                 <a href="./indexCurso.php?curso=1" class="nav-link text-muted">
                     <div class="row g-0">
@@ -48,65 +48,17 @@
                 </a>
             </div>
 
-            <div class="col-6 card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="./resources/logo.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-6 card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="./resources/logo.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
 
-            <div class="col-6 card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="./resources/logo.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row">
+            <legend>Los cursos más vendidos</legend>
 
-            <div class="col-6 card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="./resources/logo.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
+
+        <div class="row">
+            <legend>Los cursos más recientes</legend>
+
         </div>
 
 
