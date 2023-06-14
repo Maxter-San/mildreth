@@ -12,3 +12,14 @@ BEGIN
     
 END //
 DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER editarUsuario_trigger
+    BEFORE UPDATE
+    ON usuario FOR EACH ROW
+BEGIN
+
+	SET new.fechaModificacion = NOW();
+    
+END //
+DELIMITER ;

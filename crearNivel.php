@@ -22,6 +22,10 @@
         header("Location: index.php");
     }
 
+    include_once('apis/niveles.php');
+    $var = new nivelesApi();
+    $misNiveles = $var->verMisNiveles();
+
     include_once('assets/header.php');
     ?>
 
@@ -71,46 +75,14 @@
 
         <div class="container mt-5 mb-5 boxContainer">
             <legend class="text-center">Niveles</legend>
-            <div class="col card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-2">
-                        <img src="./resources/logo.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Nivel 1</h5>
-                            <p class="card-text">Teoria: <small class="text-body-secondary">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt sint rerum assumenda consequuntur labore, soluta temporibus dolore neque accusamus esse fugiat eum quidem? Placeat molestias, quae quidem autem pariatur provident!</small></p>
+            <?php
+            for ($i = 0; $i < count($misNiveles); $i++) {
+                $teoria = $misNiveles[$i]['teoria'];
+                $id_nivel = $misNiveles[$i]['id_nivel'];
 
-                            <div class="row">
-                                <div class="col">
-                                    <p class="card-text">PDFs: <small class="text-body-secondary">3</small></p>
-                                </div>
-                                <div class="col">
-                                    <p class="card-text">Links: <small class="text-body-secondary">3</small></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="card-text">Imagenes: <small class="text-body-secondary">3</small></p>
-                                </div>
-                                <div class="col">
-                                    <p class="card-text">Videos: <small class="text-body-secondary">3</small></p>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <div class="row text-center">
-                                <div class="col">
-                                </div>
-                                <div class="col-1">
-                                    <button type="button" class="btn btn-outline-danger">Eliminar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                include('assets/verMisNivelesItem.php');
+            }
+            ?>
         </div>
     </div>
 

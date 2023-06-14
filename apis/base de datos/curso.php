@@ -8,11 +8,19 @@
             $descripcion,
             $foto,
             $metodoCobro,
-            $metodoPago,
             $precio,
             $id_usuario
         ){
-            $query = $this->connect()->query('CALL curso_procedure(null, "'.$nombre.'", "'.$descripcion.'", "'.$foto.'", "'.$metodoCobro.'", '.$metodoPago.', '.$precio.', '.$id_usuario.', null, "crearCurso");');
+            $query = $this->connect()->query('CALL curso_procedure(null, "'.$nombre.'", "'.$descripcion.'", "'.$foto.'", "'.$metodoCobro.'", 1, '.$precio.', '.$id_usuario.', null, "crearCurso");');
+
+            return $query;
+
+        }
+
+        function verMisCursos(
+            $id_usuario
+        ){
+            $query = $this->connect()->query('CALL curso_procedure(null, null, null, null, null, null, null, '.$id_usuario.', null, "verMisCursos");');
 
             return $query;
 

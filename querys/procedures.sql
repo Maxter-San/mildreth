@@ -82,7 +82,8 @@ CREATE PROCEDURE curso_procedure(
 	p_precio 		DECIMAL(10,2),
 	p_id_usuario	int,
 	p_boolActivo 	boolean,
-    p_action		ENUM('crearCurso'
+    p_action		ENUM('crearCurso',
+						 'verMisCursos'
 						)
 )
 BEGIN
@@ -91,12 +92,46 @@ BEGIN
 			INSERT INTO curso(nombre, descripcion, foto, metodoCobro, metodoPago, precio, id_usuario)
             VALUES (p_nombre, p_descripcion, p_foto, p_metodoCobro, p_metodoPago, p_precio, p_id_usuario);
 			
+		WHEN 'verMisCursos' THEN
+			SELECT id_curso, nombre, descripcion, foto, metodoCobro, metodoPago, precio, id_usuario, fechaCreacion
+            FROM misCursos
+            WHERE id_usuario = p_id_usuario;
+            
 		ELSE
 			SELECT 'ninguna opcion valida seleccionada' AS 'procedure';
 	END CASE;
 END //
 DELIMITER ;
 
-SELECT* from usuario;
+DELIMITER //
+CREATE PROCEDURE nivel_procedure(
+	p_id_nivel 		int,
+    p_teoria 		varchar(1000),
+    p_metodoPago 	int,
+    p_precio 		DECIMAL(10,2),
+    p_id_curso 		int,
+    p_fechaCreacion datetime,
+    p_action		ENUM('crearNivel',
+						 'verMisNiveles'
+						)
+)
+BEGIN
+	CASE p_action
+		WHEN 'crearNivel' THEN
+			INSERT INTO nivel(teoria, metodoPago, precio, id_curso)
+            VALUES (p_teoria, p_metodoPago, p_precio, p_id_curso);
+			
+		WHEN 'verMisNiveles' THEN
+			SELECT id_nivel, teoria, metodoPago, precio, id_curso, fechaCreacion
+            FROM misNiveles
+            WHERE id_curso = p_id_curso;
+            
+		ELSE
+			SELECT 'ninguna opcion valida seleccionada' AS 'procedure';
+	END CASE;
+END //
+DELIMITER ;
+
+SELECT* from curso;
 
 CALL curso_procedure(null, "prueba", "desc", "foto", "curso", 1, 10, 5, null, "crearCurso");

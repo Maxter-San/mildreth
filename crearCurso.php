@@ -18,7 +18,13 @@
 
 <body class="d-flex flex-column min-vh-100 bg-secondary.bg-gradient" style="margin-top: 3.5em;">
     <?php
+    if (session_status() != 2)
+        session_start();
+
     include_once('apis/cursos.php');
+
+    $var = new cursosApi();
+    $misCursos = $var->verMisCursos();
 
     include_once('assets/header.php');
     ?>
@@ -36,6 +42,11 @@
                 <div class="col-md form-group boxItem">
                     <label class="form-label">Descripción del curso</label>
                     <input class="form-control" id="formDescripcion" minlength="10" maxlength="500" placeholder="Escribe la descripción del curso..." required name="descripcion">
+                </div>
+
+                <div class="col-md form-group boxItem">
+                    <label class="form-label">Foto</label>
+                    <input class="form-control" type="file" accept="image/png, image/jpg, image/jpeg" id="formFoto" required name="foto">
                 </div>
 
                 <div class="col-md form-group boxItem">
@@ -70,7 +81,7 @@
 
                 <div class="col-md form-group boxItem">
                     <label for="selectCobro" class="form-label">Método de cobro</label>
-                    <select class="form-select" aria-label="Default select example" id="selectCobro" required onchange="onChangeCobrar();">
+                    <select class="form-select" aria-label="Default select example" id="selectCobro" required onchange="onChangeCobrar();" name="cobro">
                         <option value="">Selecciona un método de cobro</option>
                         <option value="1">Cobrar por curso</option>
                         <option value="2">Cobrar por nivel</option>
@@ -93,37 +104,18 @@
 
         <div class="container mt-5 mb-5 boxContainer">
             <legend class="text-center">Mis cursos</legend>
-            <div class="col card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-2">
-                        <img src="./resources/logo.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="card-text">Fecha de creación: <small class="text-body-secondary">01/01/2000</small></p>
-                                </div>
-                                <div class="col">
-                                    <p class="card-text">Niveles: <small class="text-body-secondary">0</small></p>
-                                </div>
-                            </div>
 
-                            <hr>
+            <?php
+            for ($i = 0; $i < count($misCursos); $i++) {
+                $nombre = $misCursos[$i]['nombre'];
+                $fechaCreacion = $misCursos[$i]['fechaCreacion'];
+                $foto = $misCursos[$i]['foto'];
+                $id_curso = $misCursos[$i]['id_curso'];
 
-                            <div class="row text-center">
-                                <div class="col">
-                                    <a href="./crearNivel.php?curso=1"><button type="button" class="btn btn-outline-secondary">Ver niveles</button></a>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-danger">Eliminar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                include('assets/verMisCursosItem.php');
+            }
+            ?>
+
         </div>
     </div>
 

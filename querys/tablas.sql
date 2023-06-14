@@ -110,6 +110,9 @@ CREATE TABLE IF NOT EXISTS nivel (
 	id_nivel int 			unsigned not null unique auto_increment
 							comment '',
                             
+	id_nivel int 			unsigned not null
+							comment '',
+                            
     teoria varchar(1000) 	not null
 							comment '',
                             
