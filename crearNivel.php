@@ -22,7 +22,7 @@
 
     include_once('apis/niveles.php');
     $var = new nivelesApi();
-    $misNiveles = $var->verMisNiveles();
+    $misNiveles = $var->verMisNivelesDetalle();
 
     include_once('assets/header.php');
     ?>
@@ -32,9 +32,11 @@
             <legend class="text-center">Crear nivel</legend>
 
             <form method="POST" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+                <input class="form-control" id="formDescripcion" minlength="0" maxlength="100" placeholder="Escribe la teoría del nivel..." name="curso" hidden readonly value="<?php echo $_GET['curso']; ?>">
+                
                 <div class="col-md form-group boxItem">
-                    <label class="form-label">ID</label>
-                    <input class="form-control" id="formDescripcion" minlength="0" maxlength="100" placeholder="Escribe la teoría del nivel..." name="curso" readonly value="<?php echo $_GET['curso']; ?>">
+                    <label class="form-label">Nombre</label>
+                    <input class="form-control" id="formNombre" minlength="0" maxlength="50" placeholder="Escribe el nombre del nivel..." name="nombre">
                 </div>
 
                 <div class="col-md form-group boxItem">
@@ -44,7 +46,7 @@
 
                 <div class="col-md form-group boxItem">
                     <label class="form-label">PDFs</label>
-                    <input class="form-control" type="file" accept="application/pdf" id="formPDF" name="PDFs" multiple>
+                    <input class="form-control" type="file" accept="application/pdf" id="formPDF" name="pdf[]" multiple>
                 </div>
 
                 <div class="col-md form-group boxItem">
@@ -80,8 +82,13 @@
             <legend class="text-center">Niveles</legend>
             <?php
             for ($i = 0; $i < count($misNiveles); $i++) {
+                $nombre = $misNiveles[$i]['nombre'];
                 $teoria = $misNiveles[$i]['teoria'];
                 $id_nivel = $misNiveles[$i]['id_nivel'];
+                $imagen = $misNiveles[$i]['imagen'];
+                $video = $misNiveles[$i]['video'];
+                $pdf = $misNiveles[$i]['pdf'];
+                $link = $misNiveles[$i]['link'];
 
                 include('assets/verMisNivelesItem.php');
             }

@@ -115,7 +115,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE nivel_procedure(
 	p_id_nivel 		int,
-    nombre 			varchar(50),
+    p_nombre 		varchar(50),
     p_teoria 		varchar(1000),
     p_metodoPago 	int,
     p_precio 		DECIMAL(10,2),
@@ -128,21 +128,24 @@ CREATE PROCEDURE nivel_procedure(
     p_action		ENUM('crearNivel',
 						 'verMisNiveles',
                          'agregarImagen',
-                         'agregarVideo'
+                         'agregarVideo',
+                         'agregarPDF',
+                         'agregarLink',
+                         'nivelDetalle'
 						)
 )
 BEGIN
 	CASE p_action
 		WHEN 'crearNivel' THEN
-			INSERT INTO nivel(teoria, metodoPago, precio, id_curso)
-            VALUES (p_teoria, p_metodoPago, p_precio, p_id_curso);
+			INSERT INTO nivel(nombre, teoria, metodoPago, precio, id_curso)
+            VALUES (p_nombre, p_teoria, p_metodoPago, p_precio, p_id_curso);
             
             SELECT id_nivel, teoria, metodoPago, precio, id_curso, fechaCreacion
             FROM misNiveles
             WHERE id_nivel = LAST_INSERT_ID();
 			
 		WHEN 'verMisNiveles' THEN
-			SELECT id_nivel, teoria, metodoPago, precio, id_curso, fechaCreacion
+			SELECT nombre, id_nivel, teoria, metodoPago, precio, id_curso, fechaCreacion
             FROM misNiveles
             WHERE id_curso = p_id_curso;
             
@@ -153,6 +156,19 @@ BEGIN
         WHEN 'agregarVideo' THEN
 			INSERT INTO video(directorio, id_nivel)
             VALUES (p_video, p_id_nivel);
+            
+		WHEN 'agregarPDF' THEN
+			INSERT INTO pdf(directorio, id_nivel)
+            VALUES (p_pdf, p_id_nivel);
+            
+		WHEN 'agregarLink' THEN
+			INSERT INTO link(link, id_nivel)
+            VALUES (p_link, p_id_nivel);
+            
+		WHEN 'nivelDetalle' THEN
+			SELECT id_nivel, nombre, teoria, metodoPago, precio, id_curso, fechaCreacion, video, pdf, imagen, link
+            FROM nivelDetalle
+            WHERE id_curso = p_id_curso;
             
 		ELSE
 			SELECT 'ninguna opcion valida seleccionada' AS 'procedure';
@@ -215,5 +231,8 @@ BEGIN
 END //
 DELIMITER ;
 
-select * from cursoCategoria;
+select * from imagen;
+select * from video;
+select * from pdf;
+select * from link;
 
