@@ -18,6 +18,11 @@
 
 <body class="d-flex flex-column min-vh-100 bg-secondary.bg-gradient" style="margin-top: 3.5em;">
     <?php
+    if (session_status() != 2)
+        session_start();
+
+    include_once('apis/categorias.php');
+
     include_once('assets/header.php');
     ?>
 
@@ -37,11 +42,20 @@
                 </div>
 
                 <div class="col-md form-group boxItem">
+                    <label class="form-label">Foto</label>
+                    <input class="form-control" type="file" accept="image/png, image/jpg, image/jpeg" id="formFoto" required name="foto">
+                </div>
+
+                <div class="col-md form-group boxItem">
                     <div class="d-grid gap-2">
                         <button class="btn btn-outline-secondary" onclick="" type="submit" name="submitCrearCategoría">Crear categoría</button>
                     </div>
                 </div>
             </form>
+
+            <?php if (isset($_GET['creado'])) {
+                echo ('<p class="text-success boxItem">Categoria creada</p>');
+            } ?>
         </div>
     </div>
 

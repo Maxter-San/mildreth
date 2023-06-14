@@ -78,24 +78,33 @@ CREATE PROCEDURE curso_procedure(
 	p_descripcion 	varchar(500), 
 	p_foto 			mediumblob,          
 	p_metodoCobro 	ENUM('curso', 'nivel'),
-    p_metodoPago 	int,    
 	p_precio 		DECIMAL(10,2),
 	p_id_usuario	int,
 	p_boolActivo 	boolean,
     p_action		ENUM('crearCurso',
-						 'verMisCursos'
+						 'verMisCursos',
+                         'EliminarCurso'
 						)
 )
 BEGIN
 	CASE p_action
 		WHEN 'crearCurso' THEN
-			INSERT INTO curso(nombre, descripcion, foto, metodoCobro, metodoPago, precio, id_usuario)
-            VALUES (p_nombre, p_descripcion, p_foto, p_metodoCobro, p_metodoPago, p_precio, p_id_usuario);
+			INSERT INTO curso(nombre, descripcion, foto, metodoCobro, precio, id_usuario)
+            VALUES (p_nombre, p_descripcion, p_foto, p_metodoCobro, p_precio, p_id_usuario);
 			
-		WHEN 'verMisCursos' THEN
-			SELECT id_curso, nombre, descripcion, foto, metodoCobro, metodoPago, precio, id_usuario, fechaCreacion
+            SELECT id_curso, nombre, descripcion, foto, metodoCobro, precio, id_usuario, fechaCreacion
             FROM misCursos
-            WHERE id_usuario = p_id_usuario;
+            WHERE id_curso = LAST_INSERT_ID();
+            
+		WHEN 'verMisCursos' THEN
+			SELECT id_curso, nombre, descripcion, foto, metodoCobro, precio, id_usuario, fechaCreacion
+            FROM misCursos
+            WHERE id_usuario = p_id_usuario AND boolActivo = true;
+		
+        WHEN 'EliminarCurso' THEN
+			UPDATE curso 
+            SET  boolActivo = false
+            WHERE id_curso = p_id_curso;
             
 		ELSE
 			SELECT 'ninguna opcion valida seleccionada' AS 'procedure';
@@ -106,13 +115,20 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE nivel_procedure(
 	p_id_nivel 		int,
+    nombre 			varchar(50),
     p_teoria 		varchar(1000),
     p_metodoPago 	int,
     p_precio 		DECIMAL(10,2),
     p_id_curso 		int,
     p_fechaCreacion datetime,
+    p_pdf			varchar(500),
+    p_link			varchar(500),
+    p_imagen		mediumblob,
+    p_video			varchar(500),
     p_action		ENUM('crearNivel',
-						 'verMisNiveles'
+						 'verMisNiveles',
+                         'agregarImagen',
+                         'agregarVideo'
 						)
 )
 BEGIN
@@ -120,11 +136,23 @@ BEGIN
 		WHEN 'crearNivel' THEN
 			INSERT INTO nivel(teoria, metodoPago, precio, id_curso)
             VALUES (p_teoria, p_metodoPago, p_precio, p_id_curso);
+            
+            SELECT id_nivel, teoria, metodoPago, precio, id_curso, fechaCreacion
+            FROM misNiveles
+            WHERE id_nivel = LAST_INSERT_ID();
 			
 		WHEN 'verMisNiveles' THEN
 			SELECT id_nivel, teoria, metodoPago, precio, id_curso, fechaCreacion
             FROM misNiveles
             WHERE id_curso = p_id_curso;
+            
+		WHEN 'agregarImagen' THEN
+			INSERT INTO imagen(imagen, id_nivel)
+            VALUES (p_imagen, p_id_nivel);
+		
+        WHEN 'agregarVideo' THEN
+			INSERT INTO video(directorio, id_nivel)
+            VALUES (p_video, p_id_nivel);
             
 		ELSE
 			SELECT 'ninguna opcion valida seleccionada' AS 'procedure';
@@ -132,6 +160,60 @@ BEGIN
 END //
 DELIMITER ;
 
-SELECT* from curso;
+DELIMITER //
+CREATE PROCEDURE categoria_procedure(
+	p_id_categoria 	int,
+    p_nombre 		varchar(50),
+    p_descripcion 	varchar(500),
+    p_foto 			mediumblob,
+    p_id_curso 		int,
+    p_id_usuario	int,
+    p_action		ENUM('crearCategoria',
+						 'verCategorias',
+                         'verCategoriaEspecifica',
+                         'modificarCategoria',
+                         'cursoCategoria'
+						)
+)
+BEGIN
+	CASE p_action
+		WHEN 'crearCategoria' THEN
+			INSERT INTO categoria (nombre, descripcion, foto, id_usuario)
+            VALUES (p_nombre, p_descripcion, p_foto, p_id_usuario);
+            
+		WHEN 'verCategorias' THEN
+			SELECT id_categoria, nombre, descripcion, foto, id_usuario, fechaCreacion
+            FROM totalCategorias;
+            
+		WHEN 'verCategoriaEspecifica' THEN
+			SELECT id_categoria, nombre, descripcion, foto, id_usuario, fechaCreacion
+            FROM categoria
+            WHERE id_categoria = p_id_categoria;
+		
+        WHEN 'modificarCategoria' THEN
+            
+            IF p_foto = "" THEN
+				UPDATE categoria
+				SET nombre = p_nombre,
+					descripcion = p_descripcion
+				WHERE id_categoria = p_id_categoria;
+            ELSE
+				UPDATE categoria
+				SET nombre = p_nombre,
+					descripcion = p_descripcion,
+					foto = p_foto
+				WHERE id_categoria = p_id_categoria;
+            END IF;
+            
+		WHEN 'cursoCategoria' THEN
+			INSERT INTO cursoCategoria (id_curso, id_categoria)
+            VALUES (p_id_curso, p_id_categoria);
+            
+		ELSE
+			SELECT 'ninguna opcion valida seleccionada' AS 'procedure';
+	END CASE;
+END //
+DELIMITER ;
 
-CALL curso_procedure(null, "prueba", "desc", "foto", "curso", 1, 10, 5, null, "crearCurso");
+select * from cursoCategoria;
+

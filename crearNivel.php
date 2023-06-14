@@ -18,9 +18,7 @@
 
 <body class="d-flex flex-column min-vh-100 bg-secondary.bg-gradient" style="margin-top: 3.5em;">
     <?php
-    if (!$_GET['curso']) {
-        header("Location: index.php");
-    }
+
 
     include_once('apis/niveles.php');
     $var = new nivelesApi();
@@ -35,8 +33,13 @@
 
             <form method="POST" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'] ?>">
                 <div class="col-md form-group boxItem">
+                    <label class="form-label">ID</label>
+                    <input class="form-control" id="formDescripcion" minlength="0" maxlength="100" placeholder="Escribe la teoría del nivel..." name="curso" readonly value="<?php echo $_GET['curso']; ?>">
+                </div>
+
+                <div class="col-md form-group boxItem">
                     <label class="form-label">Teoría</label>
-                    <input class="form-control" id="formDescripcion" minlength="0" maxlength="5000" placeholder="Escribe la teoría del nivel..." name="descripcion">
+                    <input class="form-control" id="formDescripcion" minlength="0" maxlength="5000" placeholder="Escribe la teoría del nivel..." name="teoria">
                 </div>
 
                 <div class="col-md form-group boxItem">
@@ -51,17 +54,17 @@
 
                 <div class="col-md form-group boxItem">
                     <label class="form-label">Imágenes</label>
-                    <input class="form-control" type="file" accept="image/png, image/jpg, image/jpeg" id="formImagen" name="imagenes" multiple>
+                    <input class="form-control" type="file" accept="image/png, image/jpg, image/jpeg" id="formImagen" name="foto[]" multiple>
                 </div>
 
                 <div class="col-md form-group boxItem">
                     <label class="form-label">Videos</label>
-                    <input class="form-control" type="file" accept="video/mp4" id="formVideo" name="videos[]" required multiple>
+                    <input class="form-control" type="file" accept="video/mp4" id="formVideo" name="video[]" multiple required>
                 </div>
 
                 <div class="col-md form-group boxItem">
                     <label class="form-label">Precio del nivel</label>
-                    <input class="form-control" type="number" id="formPrecio" min="1" placeholder="Precio del nivel..." name="precio">
+                    <input class="form-control" type="number" id="formPrecio" min="0" placeholder="Precio del nivel..." name="precio" required value="0">
                 </div>
 
                 <div class="col-md form-group boxItem">

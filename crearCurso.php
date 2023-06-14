@@ -26,6 +26,11 @@
     $var = new cursosApi();
     $misCursos = $var->verMisCursos();
 
+    include_once('apis/categorias.php');
+
+    $var = new categoriasApi();
+    $totalCategorias = $var->mostrarCategorias();
+
     include_once('assets/header.php');
     ?>
 
@@ -58,16 +63,14 @@
                         <ul class="dropdown-menu dropdown-menu-secondary">
 
 
-                            <li>
-                                <a class="dropdown-item" data-value="item-">
-                                    <div class="form-check">
-                                        <input class="checkCategories form-check-input" type="checkbox" value="" id="flexCheckCategories" name="">
-                                        <label class="form-check-label" for="flexCheckCategories">
-                                            categoria
-                                        </label>
-                                    </div>
-                                </a>
-                            </li>
+                            <?php
+                            for ($i = 0; $i < count($totalCategorias); $i++) {
+                                $nombre = $totalCategorias[$i]['nombre'];
+                                $id_categoria = $totalCategorias[$i]['id_categoria'];
+
+                                include('assets/categoriaParaCursoItem.php');
+                            }
+                            ?>
 
                             <li>
                                 <a class="dropdown-item" href="./crearCategoria.php" target="_blank">Crear categoría</a>
@@ -78,6 +81,8 @@
 
                     </div>
                 </div>
+
+                    <input class="form-control" id="numCheckCategory" name="numCheckCategory" placeholder="0" readonly hidden>
 
                 <div class="col-md form-group boxItem">
                     <label for="selectCobro" class="form-label">Método de cobro</label>
@@ -95,7 +100,7 @@
 
                 <div class="col-md form-group boxItem">
                     <div class="d-grid gap-2">
-                        <button class="btn btn-outline-secondary" onclick="" type="submit" name="submitCrearCurso">Crear curso</button>
+                        <button class="btn btn-outline-secondary" onclick="validarCurso()" type="submit" name="submitCrearCurso">Crear curso</button>
                     </div>
                 </div>
             </form>
@@ -109,6 +114,7 @@
             for ($i = 0; $i < count($misCursos); $i++) {
                 $nombre = $misCursos[$i]['nombre'];
                 $fechaCreacion = $misCursos[$i]['fechaCreacion'];
+                $id_curso = $misCursos[$i]['id_curso'];
                 $foto = $misCursos[$i]['foto'];
                 $id_curso = $misCursos[$i]['id_curso'];
 

@@ -18,6 +18,13 @@
 
 <body class="d-flex flex-column min-vh-100 bg-secondary.bg-gradient" style="margin-top: 3.5em;">
     <?php
+    if (session_status() != 2)
+        session_start();
+
+    include_once('apis/categorias.php');
+    $var = new categoriasApi();
+    $miCategoria = $var->mostrarCategoriaEspecifica();
+
     include_once('assets/header.php');
     ?>
 
@@ -26,22 +33,33 @@
             <legend class="text-center">Modificar categoría</legend>
 
             <form method="POST" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+                <input class="form-control" id="id_categoria" placeholder="ID" required name="id_categoria" value="<?php echo $miCategoria['id_categoria']; ?>" readonly hidden>
+
                 <div class="col-md form-group boxItem">
                     <label class="form-label">Nombre de la categoría</label>
-                    <input class="form-control" id="formNombre" minlength="3" maxlength="50" placeholder="Escribe el nombre de la categoría..." required name="nombre">
+                    <input class="form-control" id="formNombre" minlength="3" maxlength="50" placeholder="Escribe el nombre de la categoría..." required name="nombre" value="<?php echo $miCategoria['nombre']; ?>">
                 </div>
 
                 <div class="col-md form-group boxItem">
                     <label class="form-label">Descripción de la categoría</label>
-                    <input class="form-control" id="formDescripcion" minlength="10" maxlength="500" placeholder="Escribe la descripción de la categoría..." required name="descripcion">
+                    <input class="form-control" id="formDescripcion" minlength="10" maxlength="500" placeholder="Escribe la descripción de la categoría..." required name="descripcion" value="<?php echo $miCategoria['descripcion']; ?>">
+                </div>
+
+                <div class="col-md form-group boxItem">
+                    <label class="form-label">Foto</label>
+                    <input class="form-control" type="file" accept="image/png, image/jpg, image/jpeg" id="formFoto" name="foto">
                 </div>
 
                 <div class="col-md form-group boxItem">
                     <div class="d-grid gap-2">
-                        <button class="btn btn-outline-secondary" onclick="" type="submit" name="submitCrearCategoría">Crear categoría</button>
+                        <button class="btn btn-outline-secondary" onclick="" type="submit" name="submitModificarCategoría">Modificar categoría</button>
                     </div>
                 </div>
             </form>
+
+            <?php if (isset($_GET['modificado'])) {
+                echo ('<p class="text-success boxItem">Categoria modificada</p>');
+            } ?>
         </div>
     </div>
 

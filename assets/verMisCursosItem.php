@@ -21,8 +21,12 @@
                     <div class="col">
                         <a href="./crearNivel.php?curso=<?php echo $id_curso; ?>"><button type="button" class="btn btn-outline-secondary">Ver niveles</button></a>
                     </div>
+
                     <div class="col">
-                        <button type="button" class="btn btn-outline-danger">Eliminar</button>
+                        <form method="POST" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+                            <input class="form-control" id="formNombre" minlength="3" maxlength="50" placeholder="Escribe el nombre del curso..." hidden required name="id_curso" value="<?php echo $id_curso; ?>">
+                            <button type="submit" class="btn btn-outline-danger" name="submit-eliminar-curso">Eliminar</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,65 @@ include_once 'base de datos/nivel.php';
 
 class nivelesApi
 {
+    function crearNivel()
+    {
+        $levelClass = new levelClass();
+
+        $precio = 0;
+        if (isset($_POST['precio'])) {
+            $precio = $_POST['precio'];
+        }
+
+        $res = $levelClass->crearNivel(
+            $_POST['teoria'],
+            1,
+            $precio,
+            $_POST["curso"]
+        );
+
+        $rows = array();
+        while ($r = mysqli_fetch_assoc($res)) {
+            $rows[] = $r;
+        }
+
+        $nivelCreado = $rows[0];
+
+        if ($_FILES['foto']['size'][0] > 0) {
+            $countfiles = count($_FILES['foto']['name']);
+            for ($i = 0; $i < $countfiles; $i++) {
+                $archivo = $_FILES['foto']['tmp_name'][$i];
+                $tamanio = $_FILES['foto']['size'][$i];
+
+                $fp = fopen($archivo, "rb");
+                $fotoBlob = fread($fp, $tamanio);
+                $fotoBlob = addslashes($fotoBlob);
+                fclose($fp);
+
+                $res = $levelClass->agregarImagen($nivelCreado['id_nivel'], $fotoBlob);
+
+            }
+        }
+
+
+        if($_FILES['video']['size'] > 0){
+            $countfiles = count($_FILES['video']['name']);
+            
+            for($i=0;$i<$countfiles;$i++){
+                $date = new DateTime("now", new DateTimeZone('America/Mexico_City') );    
+                
+                $archivo = $_FILES['video']['name'][$i];
+                $target_dir = "resources/";
+                $target_file = $target_dir.$date->format('dmY-Gisu.').pathinfo($archivo, PATHINFO_EXTENSION);
+            
+                if(move_uploaded_file($_FILES['video']['tmp_name'][$i], $target_file)){
+                    $res = $levelClass->agregarVideo($nivelCreado['id_nivel'],  $date->format('dmY-Gisu.').pathinfo($archivo, PATHINFO_EXTENSION));
+                }
+            }
+        }
+
+        header("Location: ./crearNivel.php?curso=".$_POST["curso"]."&creado");
+    }
+
     function verMisNiveles()
     {
         $levelClass = new levelClass();
@@ -16,3 +75,8 @@ class nivelesApi
         return $rows;
     }
 }
+
+if (isset($_POST['submitCrearNivel'])) {
+    $var = new nivelesApi();
+    $var->crearNivel();
+};

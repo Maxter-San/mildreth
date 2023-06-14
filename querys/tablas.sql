@@ -59,9 +59,6 @@ CREATE TABLE IF NOT EXISTS curso (
                             
 	metodoCobro ENUM('curso', 'nivel') not null
 							comment '',
-	
-    metodoPago int			unsigned not null
-							comment '',
                             
 	precio DECIMAL(10,2)	unsigned
 							comment '',
@@ -109,8 +106,8 @@ CREATE TABLE IF NOT EXISTS comentario (
 CREATE TABLE IF NOT EXISTS nivel (
 	id_nivel int 			unsigned not null unique auto_increment
 							comment '',
-                            
-	id_nivel int 			unsigned not null
+	
+    nombre varchar(50) 		not null
 							comment '',
                             
     teoria varchar(1000) 	not null
@@ -262,6 +259,11 @@ CREATE TABLE IF NOT EXISTS categoria (
             
 	foto mediumblob			not null
 							comment '',
+                            
+	id_usuario int			unsigned not null
+							comment '',
+		FOREIGN KEY (id_usuario)
+		REFERENCES usuario(id_usuario),
 
 	fechaCreacion datetime	default CURRENT_TIMESTAMP
 							comment '',

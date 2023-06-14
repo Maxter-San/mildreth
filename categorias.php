@@ -18,6 +18,14 @@
 
 <body class="d-flex flex-column min-vh-100 bg-secondary.bg-gradient" style="margin-top: 3.5em;">
     <?php
+    if (session_status() != 2)
+        session_start();
+
+    include_once('apis/categorias.php');
+
+    $var = new categoriasApi();
+    $totalCategorias = $var->mostrarCategorias();
+
     include_once('assets/header.php');
     ?>
 
@@ -26,57 +34,22 @@
             <legend class="text-center">Categorías</legend>
 
             <div class="row">
-                <div class="col-md-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="./resources/logo.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="./gestionarCategorias.php" class="btn btn-secondary">Editar</a>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                for ($i = 0; $i < count($totalCategorias); $i++) {
+                    $foto = $totalCategorias[$i]['foto'];
+                    $nombre = $totalCategorias[$i]['nombre'];
+                    $descripcion = $totalCategorias[$i]['descripcion'];
+                    $id_categoria = $totalCategorias[$i]['id_categoria'];
 
-                <div class="col-md-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="./resources/logo.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-secondary">Editar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="./resources/logo.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-secondary">Editar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="./resources/logo.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-secondary">Editar</a>
-                        </div>
-                    </div>
-                </div>
+                    include('assets/categoriasItem.php');
+                }
+                ?>
             </div>
-
         </div>
-    </div>
 
-    <?php
-    include_once('assets/footer.php');
-    ?>
+        <?php
+        include_once('assets/footer.php');
+        ?>
 
 </body>
 
